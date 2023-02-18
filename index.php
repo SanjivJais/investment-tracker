@@ -1,6 +1,7 @@
 <html>
 <?php
 include("components/header.php");
+// include("fetch_from_api.php");
 include("connection.php");
 
 session_start();
@@ -13,6 +14,12 @@ include('connection.php');
 $row = "SELECT * from users WHERE id = '$user_id'";
 $result = $conn->query($row);
 $user = $result->fetch_assoc();
+
+$s_Data = "SELECT * from stock_data";
+$result1 = $conn->query($s_Data);
+
+
+
 ?>
 
 
@@ -30,9 +37,7 @@ $user = $result->fetch_assoc();
 
             <div class="p_components">
                 <div id="prof_pic">
-                    <img style="max-width: 150%; max-height: 150%"
-                        src="https://media.istockphoto.com/id/1300972574/photo/millennial-male-team-leader-organize-virtual-workshop-with-employees-online.jpg?b=1&s=170667a&w=0&k=20&c=96pCQon1xF3_onEkkckNg4cC9SCbshMvx0CfKl2ZiYs="
-                        alt="" srcset="">
+                    <img style="max-width: 110%; max-height: 110%;" src="IMG\user-profile-icon.jpg" alt="" srcset="">
 
                 </div>
             </div>
@@ -62,43 +67,47 @@ $user = $result->fetch_assoc();
         <!-- main body content starts here   -->
         <div class="content">
             <div class="container container-1">
-                <div class="row align-items-center justify-content-between">
+                <div class="row align-items-center justify-content-between overviewRow">
                     <div class="col">
-                        <div class="card" style="width: 16rem; background-color: #fff9db;">
+                        <div class="card" style="width: 16rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Total Invested</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">$
-                                    <?php echo $user['total_invested'] ?>
+                                <h6 class="card-subtitle mb-2 text-muted"> <span style="color: #42BE5C;">$
+                                        <?php echo $user['total_invested'] ?>
+                                    </span>
                                 </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 16rem; background-color: #dbffe1;">
+                        <div class="card" style="width: 16rem;">
                             <div class="card-body ">
                                 <h5 class="card-title">Profit</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">$
-                                    <?php echo $user['total_profit'] ?>
+                                <h6 class="card-subtitle mb-2 text-muted"><span style="color: #42BE5C;">$
+                                        <?php echo $user['total_profit'] ?>
+                                    </span>
                                 </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 16rem; background-color: #ffdbdb; ">
+                        <div class="card" style="width: 16rem;">
                             <div class="card-body">
-                                <h5 class="card-title">Loss</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">$
-                                    <?php echo $user['total_lost'] ?>
+                                <h5 class="card-title lossCardTitle" style=" background-color: #ea3943;">Loss</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><span style="color: #ea3943;">$
+                                        <?php echo $user['total_lost'] ?>
+                                    </span>
                                 </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 16rem; background-color: #dbffe1;">
+                        <div class="card" style="width: 16rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Net Worth</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">$
-                                    <?php echo $user['net_worth'] ?>
+                                <h6 class="card-subtitle mb-2 text-muted"><span style="color: #42BE5C;">$
+                                        <?php echo $user['net_worth'] ?>
+                                    </span>
                                 </h6>
 
                             </div>
@@ -107,15 +116,10 @@ $user = $result->fetch_assoc();
                 </div>
                 <hr class="hr-white-bg">
                 <div class="row">
-                    <div class="col-8">
-
+                    <div class="col-6 row-2-col-1">
                         <h5 style="margin-bottom: 1rem; border-left: 10px solid #000000; padding-left: 0.8rem;">
-                            Investments <i class="fa-solid fa-plus" style="float: right; cursor: pointer;"></i></h5>
-                    </div>
-                </div>
-                <div class="container-2">
-                    <div class="row">
-                        <div class="col-8">
+                            My investments <i class="fa-solid fa-plus" style="float: right; cursor: pointer;"></i></h5>
+                        <div class="investmentList">
                             <div class="card mb-3 invCard">
                                 <div class="card-body">
                                     <h5 class="card-title">$TSLA (Tesla) <i class="fa-regular fa-pen-to-square"></i>
@@ -152,11 +156,38 @@ $user = $result->fetch_assoc();
                                     </p>
                                 </div>
                             </div>
+                            <div class="card mb-3 invCard">
+                                <div class="card-body">
+                                    <h5 class="card-title">$NFLX (Netflix) <i class="fa-regular fa-pen-to-square"></i>
+                                    </h5>
+                                    <p class="card-text"><span>$20,890</span> | Shares: <span>6,769</span> | Date:
+                                        <span>February 9, 2023</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
 
+                    <!-- section for real-time stock prices  -->
+
+                    <div class="col-6 row-2-col-2">
+                        <h5 style="margin-bottom: 1rem; border-left: 10px solid #000000; padding-left: 0.8rem;">
+                            Stock prices
+                        </h5>
+                        <div class="liveStockPrice">
+                            <?php while($stockData = $result1->fetch_assoc()) { ?>
+                                <div class="card mb-3 stockPriceCard">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <?php echo $stockData['symbol'] ?>
+                                        </h5>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
+                </div>
+                <div class="row">
 
                 </div>
             </div>

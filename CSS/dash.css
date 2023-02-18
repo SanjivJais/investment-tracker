@@ -52,16 +52,42 @@ i {
 
 }
 
-.container-2 {
-    height: 170%;
+.investmentList {
+    height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin: 1rem 2rem;
-    padding: 1rem;
+    padding: 0.7rem 1rem 1rem 1rem;
+}
+.liveStockPrice {
+    height: 50vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0.7rem 1rem 1rem 1rem;
 }
 
 .invCard i {
     font-size: 16px;
     float: right;
     cursor: pointer;
+}
+
+.overviewRow .card-body h5 {
+    color: #ffffff;
+    font-size: 15px;
+    padding: 0.6rem;
+    background-color: #42BE5C;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.overviewRow .card {
+    background-color: #ffffff;
+}
+
+.liveStockPrice .col{
+    background-color: white;
+    padding: 1.5rem;
+}
+
+.stockPriceCard{
+    height: 3.5rem;
 }
