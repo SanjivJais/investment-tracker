@@ -58,6 +58,7 @@ i {
     overflow-x: hidden;
     padding: 0.7rem 1rem 1rem 1rem;
 }
+
 .liveStockPrice {
     height: 50vh;
     overflow-y: scroll;
@@ -83,11 +84,11 @@ i {
     background-color: #ffffff;
 }
 
-.liveStockPrice .col{
+.liveStockPrice .col {
     background-color: white;
     padding: 1.5rem;
 }
 
-.stockPriceCard{
+.stockPriceCard {
     height: 3.5rem;
 }
